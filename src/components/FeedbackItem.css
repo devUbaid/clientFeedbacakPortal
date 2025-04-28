@@ -1,0 +1,153 @@
+.feedback-item {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.date {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.feedback-content {
+  margin-bottom: 1.5rem;
+}
+
+.feedback-image {
+  margin-top: 1rem;
+}
+
+.feedback-image img {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.replies-section {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.replies-section h4 {
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.reply-item {
+  background-color: #f5f5f5;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.reply-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.admin-name {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.admin-actions {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.reply-form {
+  margin-top: 1rem;
+}
+
+.reply-form textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.suggestions {
+  margin-bottom: 1rem;
+}
+
+.suggestions h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.suggestion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.suggestion-item {
+  text-align: left;
+  background-color: #f0f7ff;
+  border: 1px solid #d0e3ff;
+  border-radius: 4px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.suggestion-item:hover {
+  background-color: #e0f0ff;
+}
+
+.loading-suggestions {
+  margin-bottom: 1rem;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+@media (max-width: 768px) {
+  .feedback-header {
+    flex-direction: column;
+  }
+
+  .rating-display {
+    margin-top: 0.5rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}

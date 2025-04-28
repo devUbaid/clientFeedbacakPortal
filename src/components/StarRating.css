@@ -1,0 +1,33 @@
+.star-rating {
+  display: flex;
+  align-items: center;
+}
+
+.star {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0;
+  margin-right: 0.25rem;
+  transition: var(--transition);
+}
+
+.star.read-only {
+  cursor: default;
+}
+
+.star-icon {
+  color: #e4e5e9;
+  transition: var(--transition);
+}
+
+.star.active .star-icon {
+  color: var(--secondary-color);
+}
+
+.rating-value {
+  margin-left: 0.5rem;
+  font-weight: bold;
+}

@@ -1,0 +1,50 @@
+.feedback-form-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.feedback-form-card {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  width: 100%;
+  max-width: 700px;
+}
+
+.feedback-form-card h2 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.form-subtitle {
+  text-align: center;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+
+.feedback-form {
+  margin-bottom: 1.5rem;
+}
+
+.rating-container {
+  margin-bottom: 1rem;
+}
+
+.file-input {
+  padding: 0.5rem;
+}
+
+.form-text {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .feedback-form-card {
+    padding: 1.5rem;
+  }
+}
