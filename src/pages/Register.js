@@ -72,7 +72,7 @@ const Register = () => {
       // Remove confirmPassword before sending to API
       const { confirmPassword, ...registerData } = formData
       await register(registerData)
-      navigate("/dashboard")
+      navigate("/login")
     } catch (err) {
       console.error("Registration error:", err)
     } finally {
