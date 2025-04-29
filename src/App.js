@@ -15,7 +15,7 @@ import NotFound from "./pages/NotFound";
 // Components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
   const { user, isAdmin } = useAuth();

@@ -1,7 +1,7 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { useAuth } from "../context/AuthContext"
-import "./AuthPages.css"
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import "./AuthPages.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -9,90 +9,80 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-  })
-  const [formErrors, setFormErrors] = useState({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const { register, error } = useAuth()
-  const navigate = useNavigate()
+    role: "user", // default role
+  });
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { register, error } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
-    })
+    });
 
-    // Clear error when user types
     if (formErrors[name]) {
       setFormErrors({
         ...formErrors,
         [name]: "",
-      })
+      });
     }
-  }
+  };
 
   const validateForm = () => {
-    const errors = {}
-    const { name, email, password, confirmPassword } = formData
+    const errors = {};
+    const { name, email, password, confirmPassword } = formData;
 
-    if (!name.trim()) {
-      errors.name = "Name is required"
-    }
-
+    if (!name.trim()) errors.name = "Name is required";
     if (!email.trim()) {
-      errors.email = "Email is required"
+      errors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      errors.email = "Email is invalid"
+      errors.email = "Email is invalid";
     }
-
     if (!password) {
-      errors.password = "Password is required"
+      errors.password = "Password is required";
     } else if (password.length < 6) {
-      errors.password = "Password must be at least 6 characters"
+      errors.password = "Password must be at least 6 characters";
     }
-
     if (password !== confirmPassword) {
-      errors.confirmPassword = "Passwords do not match"
+      errors.confirmPassword = "Passwords do not match";
     }
 
-    setFormErrors(errors)
-    return Object.keys(errors).length === 0
-  }
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    if (!validateForm()) return;
 
-    if (!validateForm()) {
-      return
-    }
-
-    setIsSubmitting(true)
-
+    setIsSubmitting(true);
     try {
-      // Remove confirmPassword before sending to API
-      const { confirmPassword, ...registerData } = formData
-      await register(registerData)
-      navigate("/login")
+      const { confirmPassword, ...registerData } = formData;
+      await register(registerData);
+      navigate("/login");
     } catch (err) {
-      console.error("Registration error:", err)
+      console.error("Registration error:", err);
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
         <h2>Create an Account</h2>
-        <p className="auth-subtitle">Join our platform to submit and track your feedback.</p>
+        <p className="auth-subtitle">
+          Join our platform to submit and track your feedback.
+        </p>
 
         {error && <div className="alert alert-danger">{error}</div>}
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label htmlFor="name" className="form-label">
-              Full Name
-            </label>
+            <label htmlFor="name">Full Name</label>
             <input
               type="text"
               id="name"
@@ -102,13 +92,13 @@ const Register = () => {
               onChange={handleChange}
               placeholder="Enter your full name"
             />
-            {formErrors.name && <div className="form-error">{formErrors.name}</div>}
+            {formErrors.name && (
+              <div className="form-error">{formErrors.name}</div>
+            )}
           </div>
 
           <div className="form-group">
-            <label htmlFor="email" className="form-label">
-              Email Address
-            </label>
+            <label htmlFor="email">Email Address</label>
             <input
               type="email"
               id="email"
@@ -118,42 +108,66 @@ const Register = () => {
               onChange={handleChange}
               placeholder="Enter your email"
             />
-            {formErrors.email && <div className="form-error">{formErrors.email}</div>}
+            {formErrors.email && (
+              <div className="form-error">{formErrors.email}</div>
+            )}
           </div>
 
           <div className="form-group">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
               name="password"
-              className={`form-control ${formErrors.password ? "is-invalid" : ""}`}
+              className={`form-control ${
+                formErrors.password ? "is-invalid" : ""
+              }`}
               value={formData.password}
               onChange={handleChange}
               placeholder="Create a password"
             />
-            {formErrors.password && <div className="form-error">{formErrors.password}</div>}
+            {formErrors.password && (
+              <div className="form-error">{formErrors.password}</div>
+            )}
           </div>
 
           <div className="form-group">
-            <label htmlFor="confirmPassword" className="form-label">
-              Confirm Password
-            </label>
+            <label htmlFor="confirmPassword">Confirm Password</label>
             <input
               type="password"
               id="confirmPassword"
               name="confirmPassword"
-              className={`form-control ${formErrors.confirmPassword ? "is-invalid" : ""}`}
+              className={`form-control ${
+                formErrors.confirmPassword ? "is-invalid" : ""
+              }`}
               value={formData.confirmPassword}
               onChange={handleChange}
               placeholder="Confirm your password"
             />
-            {formErrors.confirmPassword && <div className="form-error">{formErrors.confirmPassword}</div>}
+            {formErrors.confirmPassword && (
+              <div className="form-error">{formErrors.confirmPassword}</div>
+            )}
           </div>
 
-          <button type="submit" className="btn btn-primary btn-block" disabled={isSubmitting}>
+          <div className="form-group">
+            <label htmlFor="role">Register As</label>
+            <select
+              id="role"
+              name="role"
+              className="form-control"
+              value={formData.role}
+              onChange={handleChange}
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-primary btn-block"
+            disabled={isSubmitting}
+          >
             {isSubmitting ? "Creating Account..." : "Register"}
           </button>
         </form>
@@ -165,7 +179,7 @@ const Register = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

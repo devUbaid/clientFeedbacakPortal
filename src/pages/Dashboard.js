@@ -106,7 +106,7 @@ const Dashboard = () => {
                           {feedback.replies.map((reply, index) => (
                             <div key={index} className="reply-item">
                               <div className="reply-header">
-                                <span className="admin-name">{reply.admin?.name || "Admin"}</span>
+                                <span className="admin-name">{reply.admin?.name || "Admin Reply"}</span>
                                 <span className="reply-date">{formatDate(reply.createdAt)}</span>
                               </div>
                               <p className="reply-text">{reply.text}</p>

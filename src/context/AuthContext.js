@@ -1,9 +1,9 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode"
+import { jwtDecode } from "jwt-decode";
 import api from "../utils/axiosConfig";
 
-const AuthContext = createContext()
+const AuthContext = createContext();
 function isTokenExpired(token) {
   try {
     const { exp } = jwtDecode(token);
@@ -14,15 +14,15 @@ function isTokenExpired(token) {
 }
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const navigate = useNavigate()
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   // Initialize auth state
   useEffect(() => {
-    const storedUser = localStorage.getItem("user")
-    const storedToken = localStorage.getItem("token")
+    const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("token");
 
     if (storedUser && storedToken) {
       // If token expired, force logout
@@ -34,7 +34,10 @@ export const AuthProvider = ({ children }) => {
         api.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
 
         // Protect admin routes
-        if (window.location.pathname.startsWith("/admin") && parsedUser.role !== "admin") {
+        if (
+          window.location.pathname.startsWith("/admin") &&
+          parsedUser.role !== "admin"
+        ) {
           navigate("/dashboard", { replace: true });
         }
       }
@@ -44,45 +47,44 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      setError(null)
-      setLoading(true)
-      const response = await api.post("/api/auth/register", userData)
-      return response.data.user
+      setError(null);
+      setLoading(true);
+      const response = await api.post("/api/auth/register", userData);
+      return response.data.user;
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed")
-      throw err
+      setError(err.response?.data?.message || "Registration failed");
+      throw err;
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
-  
+  };
 
   const login = async (credentials) => {
     try {
-      setError(null)
-      setLoading(true)
-      const response = await api.post("/api/auth/login", credentials)
-      const { user, token } = response.data
+      setError(null);
+      setLoading(true);
+      const response = await api.post("/api/auth/login", credentials);
+      const { user, token } = response.data;
 
-      localStorage.setItem("user", JSON.stringify(user))
-      localStorage.setItem("token", token)
-      api.defaults.headers.common["Authorization"] = `Bearer ${token}`
-      
-      setUser(user)
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+      setUser(user);
       // Redirect based on role
-      if (user.role === 'admin') {
-        navigate('/admin', { replace: true })
+      if (user.role === "admin") {
+        navigate("/admin", { replace: true });
       } else {
-        navigate('/dashboard', { replace: true })
+        navigate("/dashboard", { replace: true });
       }
-      return user
+      return user;
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed")
-      throw err
+      setError(err.response?.data?.message || "Login failed");
+      throw err;
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const logout = () => {
     localStorage.removeItem("user");
@@ -93,8 +95,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const isAdmin = () => {
-    return user?.role === 'admin'
-  }
+    return user?.role === "admin";
+  };
 
   return (
     <AuthContext.Provider
@@ -111,6 +113,6 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export const useAuth = () => useContext(AuthContext)
+export const useAuth = () => useContext(AuthContext);
