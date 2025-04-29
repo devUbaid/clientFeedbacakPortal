@@ -77,14 +77,17 @@ export const FeedbackProvider = ({ children }) => {
       }
   
       // Ensure all IDs are strings for consistent comparison
-      const processedFeedbacks = response.data.feedbacks.map((feedback) => ({
-        ...feedback,
-        _id: feedback._id.toString(),
-        user: {
-          ...feedback.user,
-          _id: feedback.user._id.toString(),
-        },
-      }));
+      const processedFeedbacks = response.data.feedbacks
+  .filter((fb) => fb && fb._id && fb.user && fb.user._id) // Filter bad data
+  .map((feedback) => ({
+    ...feedback,
+    _id: feedback._id.toString(),
+    user: {
+      ...feedback.user,
+      _id: feedback.user._id.toString(),
+    },
+  }));
+
   
       // Only update the global feedbacks state if we're not fetching for a specific user
       if (!filters.userId) {
