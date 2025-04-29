@@ -47,14 +47,7 @@ export const AuthProvider = ({ children }) => {
       setError(null)
       setLoading(true)
       const response = await api.post("/api/auth/register", userData)
-      const { user, token } = response.data
-
-      localStorage.setItem("user", JSON.stringify(user))
-      localStorage.setItem("token", token)
-      api.defaults.headers.common["Authorization"] = `Bearer ${token}`
-      
-      setUser(user)
-      return user
+      return response.data.user
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed")
       throw err
@@ -62,6 +55,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false)
     }
   }
+  
 
   const login = async (credentials) => {
     try {
