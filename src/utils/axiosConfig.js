@@ -1,14 +1,16 @@
 import axios from "axios";
 
-// Create an axios instance with default config
+// Create an axios instance with base configuration
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000" || "https://clientfeedbackportal-backend.onrender.com",
+  baseURL:
+    process.env.REACT_APP_API_URL ??
+    "https://clientfeedbackportal-backend.onrender.com", // fallback if env var missing
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Add a request interceptor to add the auth token to every request
+// Request interceptor: attach token to headers
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -22,15 +24,12 @@ api.interceptors.request.use(
   }
 );
 
-// Add a response interceptor to handle common errors
+// Response interceptor: handle common errors
 api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
-    // Handle 401 Unauthorized errors (token expired)
     if (error.response && error.response.status === 401) {
-      // Clear local storage and redirect to login
+      // Token expired or unauthorized
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       window.location.href = "/login";
