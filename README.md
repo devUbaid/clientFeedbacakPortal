@@ -69,8 +69,6 @@ src/
 - **Feedback form** with optional file upload
 - **Admin view** to manage/view all feedbacks
 - **Admin auto-reply suggestions** based on feedback content
-- **Token expiration** (forced logout after 1 hour)
-- **Persistent auth** using `localStorage`
 - **Unit testing** with Jest + Supertest
 
 ---
